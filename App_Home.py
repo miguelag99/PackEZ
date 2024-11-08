@@ -1,8 +1,5 @@
 import streamlit as st
 
-
-from program_config import Program, programs
-
 st.title("Program Installation Manager")
 
 st.write("""
