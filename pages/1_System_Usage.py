@@ -30,8 +30,12 @@ for program in programs:
     
     with col3:
         if program.status == "Not installed":
-            if st.button(f"Install {program.name}", key=program.name):
+            if st.button(f"Install {program.name}",
+                         key=program.name,
+                         icon=":material/enable:"):
                 status_placeholder.write("Installing...")
+                st.session_state[f"{program.name}_disabled"] = True
+                st.session_state[f"{program.name}_icon"] = ":material/build:"
                 if program.install(status_placeholder):
                     status_placeholder.write("Installed")
                     st.success(f"{program.name} installed successfully!")
@@ -39,6 +43,13 @@ for program in programs:
                     status_placeholder.write("Failed")
                     st.error(f"Failed to install {program.name}")
         else:
-            st.write("✓")
+            st.write(":material/check:")
 
     st.write("---")
+    
+# Display the refresh button at the bottom
+if st.button("Refresh state", key="refresh_states", icon=":material/refresh:"):
+    # Refresh all programs
+    for program in programs:
+        program.get_state()
+    st.rerun()

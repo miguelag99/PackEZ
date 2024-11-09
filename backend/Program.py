@@ -18,8 +18,11 @@ class Program:
         """Check if program is installed by looking for it in system PATH"""
         if self.get_state_fn == None:
             if shutil.which(self.name):
+                self.status = "Installed"
                 return "Installed"
-            return "Not installed"
+            else:
+                self.status = "Not installed"
+                return "Not installed"
         else:
             # TODO: Implement get_state_command with custom command
             pass
